@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Дмитрий Килин](https://up.htmlacademy.ru/javascript/23/user/997093).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Бабченко](https://htmlacademy.ru/profile/babtshe).
 
 ---
 
