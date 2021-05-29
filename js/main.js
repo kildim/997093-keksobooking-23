@@ -6,9 +6,8 @@ const MAX_BORDER_NEGATIVE = 'Верхняя граница диапазона о
 const MIN_GRATER_MAX = 'Значение нижней границы диапазона больше верхней границы диапазона';
 const MIN_EQUAL_MAX = 'Значения верхней и нижней границ диапазона совпадают';
 
-const isNegative = (number) => {
-  return number<0;
-};
+const isNegative = (number) => number<0;
+
 const alertIntervalBordersErrors = (validationResult) => {
   for (let value of validationResult) {
     console.log(`Ошибка указания границ диапазона: ${  value}`);
@@ -47,9 +46,7 @@ const getNaturalInt = (minBorder, maxBorder) => {
     console.log('!ОШИБКА В УКАЗАНИИ ДИАПАЗОНА!');
   }
 };
-const setPrecision = (value, precision) => {
-  return value.toFixed(precision);
-};
+const setPrecision = (value, precision) => value.toFixed(precision);
 const getUnsignedReal = (minBorder, maxBorder, precision) => {
   if (isIntervalBordersValid (minBorder, maxBorder)) {
     return ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
