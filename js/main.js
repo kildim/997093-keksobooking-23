@@ -47,6 +47,18 @@ const getNaturalInt = (minBorder, maxBorder) => {
     console.log('!ОШИБКА В УКАЗАНИИ ДИАПАЗОНА!');
   }
 };
+const setPrecision = (value, precision) => {
+  return value.toFixed(precision);
+};
+const getUnsignedReal = (minBorder, maxBorder, precision) => {
+  if (isIntervalBordersValid (minBorder, maxBorder)) {
+    minBorder = Math.ceil(minBorder);
+    maxBorder = Math.floor(maxBorder);
+    return ((Math.random() * (maxBorder - minBorder + 1)) + minBorder).toFixed(precision);
+  } else {
+    console.log('!ОШИБКА В УКАЗАНИИ ДИАПАЗОНА!');
+  }
+};
 /* eslint-enable no-unused-vars */
 /* eslint-enable no-console */
 /* eslint-enable prefer-const */
