@@ -52,9 +52,7 @@ const setPrecision = (value, precision) => {
 };
 const getUnsignedReal = (minBorder, maxBorder, precision) => {
   if (isIntervalBordersValid (minBorder, maxBorder)) {
-    minBorder = Math.ceil(minBorder);
-    maxBorder = Math.floor(maxBorder);
-    return ((Math.random() * (maxBorder - minBorder + 1)) + minBorder).toFixed(precision);
+    return ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
   } else {
     console.log('!ОШИБКА В УКАЗАНИИ ДИАПАЗОНА!');
   }
