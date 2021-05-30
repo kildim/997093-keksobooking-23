@@ -56,9 +56,7 @@ const _genNaturalInt = (minBorder, maxBorder) => {
   return (Math.floor(Math.random() * (maxBorder - minBorder + 1)) + minBorder);
 };
 
-const _genUnsignedReal = (minBorder, maxBorder, precision) => {
-  return ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
-};
+const _genUnsignedReal = (minBorder, maxBorder, precision) => ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
 
 /* eslint-disable no-unused-vars */
 const getUnsignedNumber = (minBorder, maxBorder, precision = 0) => {
