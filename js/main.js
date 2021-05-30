@@ -4,10 +4,10 @@ const MIN_GRATER_MAX = 'Значение нижней границы диапа�
 const MIN_EQUAL_MAX = 'Значения верхней и нижней границ диапазона совпадают';
 
 class IntervalBordersError extends Error {
-  constructor(errCode) {
+  constructor(ErrorsDefinitions) {
     super('Ошибка указания границ диапазона');
     this.name = 'IntervalBordersError';
-    this.errorCode = errCode;
+    this.ErrorsDeffenitions = ErrorsDefinitions;
   }
 }
 
