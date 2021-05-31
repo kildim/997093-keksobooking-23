@@ -7,17 +7,11 @@ class IntervalBordersError extends Error {
   constructor(ErrorsDefinitions) {
     super('Ошибка указания границ диапазона');
     this.name = 'IntervalBordersError';
-    this.ErrorsDeffenitions = ErrorsDefinitions;
+    this.ErrorsDefinitions = ErrorsDefinitions;
   }
 }
 
 const isNegative = (number) => number < 0;
-
-// const alertIntervalBordersErrors = (validationResults) => {
-//   for (const value of validationResults) {
-//     console.log(`Ошибка указания границ диапазона: ${  value}`);
-//   }
-// };
 
 const validateIntervalBorders = (minBorder, maxBorder) => {
   const intervalBordersErrors = [];
@@ -37,12 +31,6 @@ const validateIntervalBorders = (minBorder, maxBorder) => {
   return intervalBordersErrors;
 };
 
-// const isIntervalBordersValid = (minBorder, maxBorder) => {
-//   const intervalBordersErrors = validateIntervalBorders (minBorder, maxBorder);
-//   alertIntervalBordersErrors(intervalBordersErrors);
-//   return !intervalBordersErrors.length;
-// };
-
 const checkIntervalBorders = (minBorder, maxBorder) => {
   const intervalBordersErrors = validateIntervalBorders (minBorder, maxBorder);
   if (intervalBordersErrors.length > 0) {
@@ -56,7 +44,9 @@ const _genNaturalInt = (minBorder, maxBorder) => {
   return (Math.floor(Math.random() * (maxBorder - minBorder + 1)) + minBorder);
 };
 
-const _genUnsignedReal = (minBorder, maxBorder, precision) => ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
+const _genUnsignedReal = (minBorder, maxBorder, precision) => {
+  ((Math.random() * (maxBorder - minBorder)) + minBorder).toFixed(precision);
+};
 
 /* eslint-disable no-unused-vars */
 const getUnsignedNumber = (minBorder, maxBorder, precision = 0) => {
