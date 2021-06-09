@@ -41,8 +41,8 @@ const mockArray = (sources) => {
   const resultsPower = getRandomPositiveInteger(1, sources.length);
   const sourcesLocal = sources.slice(0);
   for (let iterator = 0; iterator < resultsPower; iterator++) {
-    const randomIndex = getRandomPositiveInteger(0, sourcesLocal.length-1);
-    results = results.concat(sourcesLocal.splice(randomIndex,1));
+    const randomIndex = getRandomPositiveInteger(0, sourcesLocal.length - 1);
+    results = results.concat(sourcesLocal.splice(randomIndex, 1));
   }
   return results;
 };
@@ -71,9 +71,10 @@ const mockAd = () => {
       description: 'Advertisement description',
       photos: mockArray(PHOTO_VALUES),
     },
-  }
+  };
 };
 
 const advertisements = new Array(ADS_COUNT).fill(null).map(() => mockAd());
 
 
+console.log(advertisements); // eslint-disable-line no-console
