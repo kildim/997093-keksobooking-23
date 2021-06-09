@@ -35,45 +35,45 @@ function getRandomPositiveInteger (arg1, arg2) {
 }
 
 const mockAvatar = () => `img/avatars/user0${getRandomPositiveInteger(1, 8)}.png`;
-const mockAddress = () => `${getRandomPositiveFloat(0, 90, 4)},` +
-  `${getRandomPositiveFloat(0, 180, 4)}`;
 
-const mockArray = (sourceArray) => {
-  let resultArray = [];
-  const resultArrayPower = getRandomPositiveInteger(1, sourceArray.length);
-  const sourceArrayLocal = sourceArray.slice(0);
-  for (let iterator = 0; iterator < resultArrayPower; iterator++) {
-    const randomIndex = getRandomPositiveInteger(0, sourceArrayLocal.length-1);
-    resultArray = resultArray.concat(sourceArrayLocal.splice(randomIndex,1));
+const mockArray = (sources) => {
+  let results = [];
+  const resultsPower = getRandomPositiveInteger(1, sources.length);
+  const sourcesLocal = sources.slice(0);
+  for (let iterator = 0; iterator < resultsPower; iterator++) {
+    const randomIndex = getRandomPositiveInteger(0, sourcesLocal.length-1);
+    results = results.concat(sourcesLocal.splice(randomIndex,1));
   }
-  return resultArray;
+  return results;
 };
 
-const mockAd = () => ({
-  author: {
-    avatar: mockAvatar(),
-  },
-  offer: {
-    title: 'Best vocation',
-    address: mockAddress (),
-    price: getRandomPositiveInteger(0, 10000000),
-    type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, 5)]),
-    rooms: getRandomPositiveInteger(1, 100),
-    guests: getRandomPositiveInteger(1, 100),
-    checkin: CHECKIN_TIME_VALUES[getRandomPositiveInteger(0, 2)],
-    checkout: CHECKOUT_TIME_VALUES[getRandomPositiveInteger(0, 2)],
-    features: mockArray(FEATURE_VALUES),
-    description: 'Advertisement description',
-    photos: mockArray(PHOTO_VALUES),
-  },
-  location: {
-    lat: getRandomPositiveFloat(35.65, 35.7, 5),
-    lng: getRandomPositiveFloat(139.7, 139.8, 5),
-  },
-});
+const mockAd = () => {
+  const lat = getRandomPositiveFloat(35.65, 35.7, 5);
+  const lng = getRandomPositiveFloat(139.7, 139.8, 5);
+  return {
+    author: {
+      avatar: mockAvatar(),
+    },
+    location: {
+      lat: lat,
+      lng: lng,
+    },
+    offer: {
+      title: 'Best vocation',
+      address: `${lat}, ${lng}`,
+      price: getRandomPositiveInteger(0, 10000000),
+      type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, 5)]),
+      rooms: getRandomPositiveInteger(1, 100),
+      guests: getRandomPositiveInteger(1, 100),
+      checkin: CHECKIN_TIME_VALUES[getRandomPositiveInteger(0, 2)],
+      checkout: CHECKOUT_TIME_VALUES[getRandomPositiveInteger(0, 2)],
+      features: mockArray(FEATURE_VALUES),
+      description: 'Advertisement description',
+      photos: mockArray(PHOTO_VALUES),
+    },
+  }
+};
 
 const advertisements = new Array(ADS_COUNT).fill(null).map(() => mockAd());
-
-console.log(advertisements);
 
 
