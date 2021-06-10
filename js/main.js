@@ -6,6 +6,10 @@ const PHOTO_VALUES = ['https://assets.htmlacademy.ru/content/intensive/javascrip
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 const ADS_COUNT = 10;
+const MIN_LAT = 35.65;
+const MAX_LAT = 35.7;
+const MIN_LNG = 139.7;
+const MAX_LNG = 139.8;
 
 // Функция взята из интернета и доработана
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
@@ -48,8 +52,8 @@ const mockArray = (sources) => {
 };
 
 const mockAd = () => {
-  const lat = getRandomPositiveFloat(35.65, 35.7, 5);
-  const lng = getRandomPositiveFloat(139.7, 139.8, 5);
+  const lat = getRandomPositiveFloat(MIN_LAT, MAX_LAT, 5);
+  const lng = getRandomPositiveFloat(MIN_LNG, MAX_LNG, 5);
   return {
     author: {
       avatar: mockAvatar(),
@@ -62,7 +66,7 @@ const mockAd = () => {
       title: 'Best vocation',
       address: `${lat}, ${lng}`,
       price: getRandomPositiveInteger(0, 10000000),
-      type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, 5)]),
+      type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, RESIDENCE_TYPES.length - 1)]),
       rooms: getRandomPositiveInteger(1, 100),
       guests: getRandomPositiveInteger(1, 100),
       checkin: CHECKIN_TIME_VALUES[getRandomPositiveInteger(0, 2)],
