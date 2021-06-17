@@ -1,7 +1,7 @@
 
 // Функция взята из интернета и доработана
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
-function getRandomPositiveFloat(arg1, arg2, digits = 1) {
+function getRandomPositiveFloat (arg1, arg2, digits = 1) {
   // Чтобы не заставлять пользователя нашей функции помнить порядок аргументов,
   // реализуем поддержку передачи минимального и максимального значения в любом порядке,
   // а какое из них большее и меньшее вычислим с помощью Math.min и Math.max
@@ -26,4 +26,12 @@ function getRandomPositiveInteger (arg1, arg2) {
   return Math.floor(result);
 }
 
-export {getRandomPositiveFloat, getRandomPositiveInteger};
+function arraysIntersection (array1, array2) {
+  return array1.filter( (el) => array2.indexOf( el ) > -1 );
+}
+
+function isArraysIntersecting (array1, array2) {
+  return arraysIntersection(array1, array2).length > 0;
+}
+
+export {getRandomPositiveFloat, getRandomPositiveInteger, arraysIntersection, isArraysIntersecting};

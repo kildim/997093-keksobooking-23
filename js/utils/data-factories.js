@@ -1,9 +1,16 @@
-import {getRandomPositiveFloat, getRandomPositiveInteger} from './numbers-generation.js';
+import {getRandomPositiveFloat, getRandomPositiveInteger} from './mathematics.js';
 
 const RESIDENCE_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const FEATURE_VALUES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const HOSTS_DICTIONARY = new Map([
+  [RESIDENCE_TYPES.find((type) => type === 'flat'), 'Квартира'],
+  [RESIDENCE_TYPES.find((type) => type === 'bungalow'), 'Бунгало'],
+  [RESIDENCE_TYPES.find((type) => type === 'house'), 'Дом'],
+  [RESIDENCE_TYPES.find((type) => type === 'palace'), 'Дворец'],
+  [RESIDENCE_TYPES.find((type) => type === 'hotel'), 'Отель'],
+]);
 const CHECKIN_TIME_VALUES = ['12:00', '13:00', '14:00'];
 const CHECKOUT_TIME_VALUES = ['12:00', '13:00', '14:00'];
-const FEATURE_VALUES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTO_VALUES = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
@@ -52,4 +59,4 @@ const mockAd = () => {
   };
 };
 
-export {mockAd};
+export {mockAd, FEATURE_VALUES, RESIDENCE_TYPES, HOSTS_DICTIONARY};
