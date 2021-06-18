@@ -1,14 +1,7 @@
 import {getRandomPositiveFloat, getRandomPositiveInteger} from './mathematics.js';
+import {RESIDENCE_TYPES, FEATURE_VALUES} from '../constants/constants.js';
 
-const RESIDENCE_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const FEATURE_VALUES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const HOSTS_DICTIONARY = new Map([
-  [RESIDENCE_TYPES.find((type) => type === 'flat'), 'Квартира'],
-  [RESIDENCE_TYPES.find((type) => type === 'bungalow'), 'Бунгало'],
-  [RESIDENCE_TYPES.find((type) => type === 'house'), 'Дом'],
-  [RESIDENCE_TYPES.find((type) => type === 'palace'), 'Дворец'],
-  [RESIDENCE_TYPES.find((type) => type === 'hotel'), 'Отель'],
-]);
+
 const CHECKIN_TIME_VALUES = ['12:00', '13:00', '14:00'];
 const CHECKOUT_TIME_VALUES = ['12:00', '13:00', '14:00'];
 const PHOTO_VALUES = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
@@ -44,7 +37,7 @@ const mockAd = () => {
       lng: lng,
     },
     offer: {
-      title: 'Best vocation',
+      title: 'Best vocations',
       address: `${lat}, ${lng}`,
       price: getRandomPositiveInteger(0, 10000000),
       type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, RESIDENCE_TYPES.length - 1)]),
@@ -59,4 +52,4 @@ const mockAd = () => {
   };
 };
 
-export {mockAd, FEATURE_VALUES, RESIDENCE_TYPES, HOSTS_DICTIONARY};
+export {mockAd};
