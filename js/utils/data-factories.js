@@ -37,7 +37,7 @@ const mockAd = () => {
       lng: lng,
     },
     offer: {
-      title: 'Best vocations',
+      title: 'Best vocation',
       address: `${lat}, ${lng}`,
       price: getRandomPositiveInteger(0, 10000000),
       type: String(RESIDENCE_TYPES[getRandomPositiveInteger(0, RESIDENCE_TYPES.length - 1)]),
