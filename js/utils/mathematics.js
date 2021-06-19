@@ -1,3 +1,4 @@
+// Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 function getRandomPositiveFloat (arg1, arg2, digits = 1) {
   const lower = Math.min(Math.abs(arg1), Math.abs(arg2));
   const upper = Math.max(Math.abs(arg1), Math.abs(arg2));

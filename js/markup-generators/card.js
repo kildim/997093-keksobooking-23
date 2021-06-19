@@ -1,5 +1,5 @@
 import {HOSTS_DICTIONARY} from '../constants/constants.js';
-import {isOfferFeaturesIntersectingElementClasses} from '../utils/helpers.js';
+import {isOfferFeaturesIntersectingElementClasses, declOfNum} from '../utils/helpers.js';
 
 const articleTemplate = document.querySelector('#card').content.querySelector('.popup');
 const articleImgTemplate = document.querySelector('#card').content.querySelector('.popup__photo');
@@ -20,11 +20,11 @@ const generateArticle = (ad) => {
 
   const {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos} = ad.offer;
 
-  popupTitle.textContent = title ?  title : popupTitle.remove();
+  popupTitle.textContent = title ? title : popupTitle.remove();
   popupTextAddress.textContent = address ? address : popupTextAddress.remove();
-  popupTextPrice.textContent = price ? `${price} ₽/ночь` : popupTextPrice.remove();
+  popupTextPrice.textContent = price ? `${price} ₽/ночь` : '0 ₽/ночь';
   popupType.textContent = HOSTS_DICTIONARY[`${type}`] ? HOSTS_DICTIONARY[`${type}`] : popupType.remove();
-  popupTextCapacity.textContent = rooms && guests ? `${rooms} комнаты для ${guests} гостей` :
+  popupTextCapacity.textContent = rooms && guests ? `${rooms} ${declOfNum(rooms, ['комната', 'комнаты', 'комнат'])} для ${guests} ${declOfNum(guests, ['гость', 'гостя', 'гостей'])}` :
     popupTextCapacity.remove();
   popupTextTime.textContent = checkin && checkout ? `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}` :
     popupTextTime.remove();
