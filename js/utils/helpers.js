@@ -13,7 +13,7 @@ const declareNumerals = (number, titles) => {
 
 const  declareGuestsNumber = (guests) => {
   let guestsNumberString = 'не для гостей';
-  guestsNumberString = (guests % 10 === 1 && guests < 100) ? `для ${guests} гостя` : `для ${guests} гостей`;
+  guestsNumberString = guests % 10 === 1 ? `для ${guests} гостя` : `для ${guests} гостей`;
   guestsNumberString = guests > 99 ? 'не для гостей' : guestsNumberString;
   return guestsNumberString;
 };
