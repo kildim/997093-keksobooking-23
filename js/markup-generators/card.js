@@ -4,7 +4,7 @@ import {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuest
 const articleTemplate = document.querySelector('#card').content.querySelector('.popup');
 const articleImgTemplate = document.querySelector('#card').content.querySelector('.popup__photo');
 
-const generateArticle = (ad) => {
+const renderArticle = (targetNode, ad) => {
   const article = articleTemplate.cloneNode(true);
   const popupTitle = article.querySelector('.popup__title');
   const popupTextAddress = article.querySelector('.popup__text--address');
@@ -47,7 +47,7 @@ const generateArticle = (ad) => {
   }else{
     popupPhotos.remove();
   }
-  return article;
+  return targetNode.appendChild(article);
 };
 
-export {generateArticle};
+export {renderArticle};
