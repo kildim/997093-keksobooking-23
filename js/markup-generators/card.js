@@ -22,7 +22,7 @@ const generateArticle = (ad) => {
 
   popupTitle.textContent = title ? title : popupTitle.remove();
   popupTextAddress.textContent = address ? address : popupTextAddress.remove();
-  popupTextPrice.textContent = price ? `${price} ₽/ночь` : '0 ₽/ночь';
+  popupTextPrice.textContent = price === undefined ? `${price} ₽/ночь` : popupTextPrice.remove();
   popupType.textContent = HOSTS_DICTIONARY[`${type}`] ? HOSTS_DICTIONARY[`${type}`] : popupType.remove();
   popupTextCapacity.textContent = rooms && guests ? `${rooms} ${declareNumerals(rooms, ['комната', 'комнаты', 'комнат'])} ${declareGuestsNumber(guests)}` :
     popupTextCapacity.remove();
