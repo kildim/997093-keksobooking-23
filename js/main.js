@@ -6,6 +6,3 @@ const advertisements = new Array(ADS_COUNT).fill(null).map(() => mockAd());
 const blockMap = document.querySelector('#map-canvas');
 
 renderArticle(blockMap, advertisements[0]);
-
-
-
