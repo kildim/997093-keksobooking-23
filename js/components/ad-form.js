@@ -43,9 +43,9 @@ const checkRoomNumber = () => {
   }
 };
 const validateAdForm = (evt) => {
+  console.log('validateAdForm');
   if (!checkRoomNumber()) {
     evt.preventDefault();}
-  console.log('validateAdForm');
   evt.preventDefault();
 };
 const switchOnAdFormValidation = () => {
