@@ -18,9 +18,4 @@ const  declareGuestsNumber = (guests) => {
   return guestsNumberString;
 };
 
-const failValidity = (el, message) => {
-  el.setCustomValidity(message);
-  return true;
-};
-
-export {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuestsNumber, failValidity};
+export {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuestsNumber};
