@@ -1,17 +1,13 @@
-import {activateForm, deactivateForm} from '../common/forms.js';
+import {activate, deactivate} from '../common/switch-form-activity.js';
 
 const mapFilters = document.querySelector('.map__filters');
 
 const activateMapFilters = () => {
-  activateForm(mapFilters, 'ad-form--disabled');
+  activate(mapFilters, 'ad-form--disabled');
 };
 
 const deactivateMapFilters = () => {
-  deactivateForm(mapFilters, 'map__filters--disabled');
+  deactivate(mapFilters, 'map__filters--disabled');
 };
 
-const initMapFilters = () => {
-  activateMapFilters(mapFilters, 'map__filters--disabled');
-};
-
-export {initMapFilters, activateMapFilters, deactivateMapFilters};
+export {activateMapFilters, deactivateMapFilters};
