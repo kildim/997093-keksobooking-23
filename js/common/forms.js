@@ -1,6 +1,3 @@
-const adForm = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
-
 const deactivateForm = (form, additionalClass) => {
   const fieldSets = form.querySelectorAll('fieldset');
   form.classList.add(additionalClass);
@@ -12,13 +9,4 @@ const activateForm = (form, additionalClass) => {
   fieldSets.forEach((el) => {el.removeAttribute('disabled');});
 };
 
-const deactivate = () => {
-  deactivateForm(adForm, 'ad-form--disabled');
-  deactivateForm(mapFilters, 'map__filters--disabled');
-};
-const activate = () => {
-  activateForm(adForm, 'ad-form--disabled');
-  activateForm(mapFilters, 'map__filters--disabled');
-};
-
-export {deactivate, activate};
+export {deactivateForm, activateForm};
