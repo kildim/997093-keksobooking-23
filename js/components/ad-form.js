@@ -1,5 +1,5 @@
 import {dropValidity} from '../utils/helpers.js';
-import {activate, deactivate} from '../common/switch-form-activity.js';
+import * as Forms from '../common/forms.js';
 
 const MIN_PRICE = {
   'bungalow'  : 0,
@@ -70,11 +70,11 @@ const validateRoomNumber = () => {
 };
 
 const validateAdForm = (evt) => {
-  if (!(capacity.validity.valid && roomNumber.validity.valid )) {
+  if (!(capacity.validity.valid && roomNumber.validity.valid)) {
     evt.preventDefault();}
 };
 
-const activateAdForm = () => {
+const activate = () => {
   hostType.addEventListener('input', setupMinPrice);
 
   timeIn.addEventListener('input', syncInOutTime);
@@ -88,10 +88,10 @@ const activateAdForm = () => {
 
   adForm.addEventListener('submit', validateAdForm);
 
-  activate(adForm, 'ad-form--disabled');
+  Forms.activate(adForm, 'ad-form--disabled');
 };
 
-const deactivatAdForm = () => {
+const deactivate = () => {
   hostType.removeEventListener('input', setupMinPrice);
 
   timeIn.removeEventListener('input', syncInOutTime);
@@ -103,7 +103,7 @@ const deactivatAdForm = () => {
   capacity.removeEventListener('input', validateCapacity);
   roomNumber.removeEventListener('input', validateRoomNumber);
 
-  deactivate(adForm, 'ad-form--disabled');
+  Forms.deactivate(adForm, 'ad-form--disabled');
 };
 
-export {activateAdForm, deactivatAdForm};
+export {activate, deactivate};

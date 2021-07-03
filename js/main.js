@@ -1,5 +1,5 @@
-import {activateAdForm} from './components/ad-form.js';
-import {activateMapFilters} from './components/map-filters.js';
+import * as AdForm from './components/ad-form.js';
+import * as MapFilters from  './components/map-filters.js';
 
-activateAdForm();
-activateMapFilters();
+AdForm.activate();
+MapFilters.activate();
