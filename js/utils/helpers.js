@@ -18,4 +18,8 @@ const  declareGuestsNumber = (guests) => {
   return guestsNumberString;
 };
 
-export {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuestsNumber};
+const dropValidity = (...fields) => {
+  for (const field of fields) { field.setCustomValidity(''); }
+};
+
+export {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuestsNumber, dropValidity};
