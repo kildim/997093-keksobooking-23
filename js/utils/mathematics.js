@@ -13,7 +13,4 @@ function getRandomPositiveInteger (arg1, arg2) {
   return Math.floor(result);
 }
 
-function isArrayContainNumber (array, number) {
-  return array.find((el) => el === number) !== undefined;
-}
-export {getRandomPositiveFloat, getRandomPositiveInteger, isArrayContainNumber};
+export {getRandomPositiveFloat, getRandomPositiveInteger};

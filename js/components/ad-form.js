@@ -1,5 +1,6 @@
 import {dropValidity} from '../utils/helpers.js';
 import * as Forms from '../common/forms.js';
+import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
 
 const MIN_PRICE = {
   'bungalow'  : 0,
@@ -16,6 +17,7 @@ const hostType = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const address = adForm.querySelector('#address');
 
 const _validateField = (field, checkupFunction) => {
   const customValidityMessage = checkupFunction();
@@ -74,7 +76,13 @@ const validateAdForm = (evt) => {
     evt.preventDefault();}
 };
 
+const setAddress = (lat, lng) => {
+  address.value = `lat: ${lat}, lng: ${lng}`;
+};
+
 const activate = () => {
+  setAddress(TOKIO_LAT, TOKIO_LNG);
+
   hostType.addEventListener('input', setupMinPrice);
 
   timeIn.addEventListener('input', syncInOutTime);
@@ -106,4 +114,4 @@ const deactivate = () => {
   Forms.deactivate(adForm, 'ad-form--disabled');
 };
 
-export {activate, deactivate};
+export {activate, deactivate, setAddress};
