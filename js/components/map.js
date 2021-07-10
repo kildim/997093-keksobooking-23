@@ -58,6 +58,15 @@ const addMockAds = (ads) => {
 };
 //
 
+/**
+ * Создаёт функцию обратного вызова для события 'moveend' главного маркера.
+ * Позволяет в качестве колбэка использовать функцию, принимающую для последующей обработки
+ * координаты долготы и широты.
+ * @param coordsManipulationFunction - функция принимающая в качестве параметров координаты долготы и широты.
+ * @returns {(function(*): void)|*} - функция колбэк для события 'moveend' принимающая в качестве
+ *                                    параметра событие маркера библиотеки Leaflet
+ * @private
+ */
 const _generateMarkerMovedCb = (coordsManipulationFunction) => function (evt) {
   const {lat, lng} = evt.target.getLatLng();
   coordsManipulationFunction(lat, lng);
