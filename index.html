@@ -80,7 +80,7 @@
       <h2 class="notice__title">Ваше объявление</h2>
       <form class="ad-form ad-form--disabled" method="post" enctype="multipart/form-data"
             action="https://23.javascript.pages.academy/keksobooking" autocomplete="off">
-        <fieldset class="ad-form-header" disabled>
+        <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
             <div class="ad-form-header__preview">
@@ -93,16 +93,16 @@
             <p class="ad-form-header__info">Заполните все обязательные поля, назначьте цену, загрузите аватар и фото жилья. Придумайте интересное описание. Оно сделает объявление более живым и привлекательным. Получившееся объявление должно давать гостям полное представление о вашем жилье.</p>
           </div>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide" disabled>
+        <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
           <input id="title" name="title" type="text" placeholder="Кратко опишите жильё от 30 до 100 символов" required
                  minlength="30" maxlength="100">
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide" disabled>
+        <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
           <input id="address" name="address" type="text" readonly value="!!!" placeholder="!!!">
         </fieldset>
-        <fieldset class="ad-form__element" disabled>
+        <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
           <select id="type" name="type">
             <option value="bungalow" selected>Бунгало</option>
@@ -112,12 +112,12 @@
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element" disabled>
+        <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
           <input id="price" name="price" type="number" placeholder="от 0" required
                  min="0" max="1000000">
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--time" disabled>
+        <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
           <select id="timein" name="timein">
             <option value="12:00" selected>После 12</option>
@@ -130,7 +130,7 @@
             <option value="14:00">Выезд до 14</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element" disabled>
+        <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
           <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
@@ -139,7 +139,7 @@
             <option value="100">100 комнат</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element" disabled>
+        <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
             <option value="3">для 3 гостей</option>
@@ -148,7 +148,7 @@
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide features" disabled>
+        <fieldset class="ad-form__element ad-form__element--wide features">
           <legend>Удобства: Wi-Fi, кухня, парковка, стиралка, лифт, кондиционер</legend>
           <input class="features__checkbox visually-hidden" type="checkbox" name="feature" value="wifi" id="feature-wifi">
           <label class="features__label features__label--wifi" for="feature-wifi">Wi-Fi</label>
@@ -163,11 +163,11 @@
           <input class="features__checkbox visually-hidden" type="checkbox" name="feature" value="conditioner" id="feature-conditioner">
           <label class="features__label features__label--conditioner" for="feature-conditioner">Кондиционер</label>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide" disabled>
+        <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="description">Описание (не обязательно)</label>
           <textarea id="description" name="description" placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще"></textarea>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide" disabled>
+        <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label">Фотография жилья</label>
           <div class="ad-form__photo-container">
             <div class="ad-form__upload">
@@ -177,7 +177,7 @@
             <div class="ad-form__photo"></div>
           </div>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--submit" disabled>
+        <fieldset class="ad-form__element ad-form__element--submit">
           <button class="ad-form__submit" type="submit">Опубликовать</button>
           или <button class="ad-form__reset" type="reset">очистить</button>
         </fieldset>
