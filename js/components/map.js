@@ -5,8 +5,8 @@ import {mockAd} from '../utils/data-factories.js';
 import {renderArticle} from './card.js';
 //
 
-const MAIN_MARKER_ICON = '/img/main-pin.svg';
-const COMMON_MARKER_ICON = '/img/pin.svg';
+const MAIN_MARKER_ICON = 'img/main-pin.svg';
+const COMMON_MARKER_ICON = 'img/pin.svg';
 
 const siteMap = L.map('map-canvas');
 const tileLayer = L.tileLayer(
