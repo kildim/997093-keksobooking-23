@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
+  <link rel="stylesheet" href="css/leaflet.css">
+  <script src="js/utils/leaflet.js"></script>
+
   <script type="module" src="js/main.js"></script>
 
   <title>Кексобукинг</title>
@@ -23,12 +26,12 @@
     <section class="map">
 
       <!-- Блок для вставки карты -->
-      <div class="map__canvas" id="map-canvas"></div>
+      <div class="map__canvas" id="map-canvas" style="height: 500px"></div>
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
-        <form action="#" class="map__filters" autocomplete="off">
-          <select name="housing-type" id="housing-type" class="map__filter">
+        <form action="#" class="map__filters map__filters--disabled" autocomplete="off">
+          <select name="housing-type" id="housing-type" class="map__filter" disabled>
             <option value="any" selected>Любой тип жилья</option>
             <option value="bungalow">Бунгало</option>
             <option value="flat">Квартира</option>
@@ -36,25 +39,25 @@
             <option value="house">Дом</option>
             <option value="palace">Дворец</option>
           </select>
-          <select name="housing-price" id="housing-price" class="map__filter">
+          <select name="housing-price" id="housing-price" class="map__filter" disabled>
             <option value="any" selected>Любая</option>
             <option value="middle">10000 - 50000&#x20bd;</option>
             <option value="low">до 10000&#x20bd;</option>
             <option value="high">от 50000&#x20bd;</option>
           </select>
-          <select name="housing-rooms" id="housing-rooms" class="map__filter">
+          <select name="housing-rooms" id="housing-rooms" class="map__filter" disabled>
             <option value="any" selected>Любое число комнат</option>
             <option value="1">Одна комната</option>
             <option value="2">Две комнаты</option>
             <option value="3">Три комнаты</option>
           </select>
-          <select name="housing-guests" id="housing-guests" class="map__filter">
+          <select name="housing-guests" id="housing-guests" class="map__filter" disabled>
             <option value="any" selected>Любое число гостей</option>
             <option value="2">Два гостя</option>
             <option value="1">Один гость</option>
             <option value="0">Не для гостей</option>
           </select>
-          <fieldset id="housing-features" class="map__features">
+          <fieldset id="housing-features" class="map__features" disabled>
             <input type="checkbox" name="features" value="wifi" id="filter-wifi" class="map__checkbox visually-hidden">
             <label class="map__feature map__feature--wifi" for="filter-wifi">Wi-Fi</label>
             <input type="checkbox" name="features" value="dishwasher" id="filter-dishwasher" class="map__checkbox visually-hidden">
@@ -75,7 +78,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="post" enctype="multipart/form-data"
+      <form class="ad-form ad-form--disabled" method="post" enctype="multipart/form-data"
             action="https://23.javascript.pages.academy/keksobooking" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>

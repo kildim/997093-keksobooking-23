@@ -1,13 +1,14 @@
-import * as Forms from '../common/forms.js';
-
 const mapFilters = document.querySelector('.map__filters');
+const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
 
 const activate = () => {
-  Forms.activate(mapFilters, 'ad-form--disabled');
+  mapFilters.classList.remove('map__filters--disabled');
+  interactiveControls.forEach((el) => {el.removeAttribute('disabled', '');});
 };
 
 const deactivate = () => {
-  Forms.deactivate(mapFilters, 'map__filters--disabled');
+  mapFilters.classList.add('map__filters--disabled');
+  interactiveControls.forEach((el) => {el.setAttribute('disabled', '');});
 };
 
 export {activate, deactivate};
