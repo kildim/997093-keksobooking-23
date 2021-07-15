@@ -80,5 +80,8 @@ const afterLoad = (cb) => {
 const markerMoved = (cb) => {
   mainMarker.on('moveend', _generateMarkerMovedCb(cb));
 };
+const resetData = () => {
+  mainMarker.setLatLng(L.latLng(TOKIO_LAT, TOKIO_LNG));
+};
 
-export {activate, afterLoad, markerMoved};
+export {activate, afterLoad, markerMoved, resetData};

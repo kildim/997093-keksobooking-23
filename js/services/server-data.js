@@ -11,17 +11,14 @@ const getBookings = (processBookings) => {
     .catch((error) => ErrMsg.renderErrorMsg(error));
 };
 
-const addBooking = (bookingFormData) => {
+const addBooking = (processSuccessResponse, bookingFormData) => {
   const FETCH_OPTIONS = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     body: bookingFormData,
   };
 
   fetch(DATA_POST_URL, FETCH_OPTIONS)
-    .then((response) => response.ok ?  response.json() : ErrMsg.renderErrorMsg('response.statusText'))
+    .then((response) => response.ok ?  processSuccessResponse() : ErrMsg.renderErrorMsg('response.statusText'))
     .then(SuccMsg.renderSuccessMsg)
     .catch((error) => ErrMsg.renderErrorMsg(error));
 };

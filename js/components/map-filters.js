@@ -11,4 +11,6 @@ const deactivate = () => {
   interactiveControls.forEach((el) => {el.setAttribute('disabled', '');});
 };
 
-export {activate, deactivate};
+const resetData = () => mapFilters.reset();
+
+export {activate, deactivate, resetData};
