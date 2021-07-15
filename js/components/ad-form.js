@@ -1,5 +1,6 @@
 import {dropValidity} from '../utils/helpers.js';
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
+import  {addBooking} from '../services/server-data.js';
 
 const MIN_PRICE = {
   'bungalow'  : 0,
@@ -18,6 +19,8 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const address = adForm.querySelector('#address');
 const interactiveControls = adForm.querySelectorAll('input, select, fieldset');
+let _afterSuccessfulSubmitting;
+let _onResetted;
 
 const _validateField = (field, checkupFunction) => {
   const customValidityMessage = checkupFunction();
@@ -71,13 +74,24 @@ const validateRoomNumber = () => {
   _validateField(roomNumber, checkRoomNumber);
 };
 
-const validateAdForm = (evt) => {
-  if (!(capacity.validity.valid && roomNumber.validity.valid)) {
-    evt.preventDefault();}
-};
-
 const setAddress = (lat, lng) => {
   address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+};
+const formSubmitted = (cb) => _afterSuccessfulSubmitting = cb;
+const formResetted = (cb) => _onResetted = cb;
+
+const resetData = () => adForm.reset();
+
+const onSuccessfulSubmitting = () => {
+  resetData();
+  if (_afterSuccessfulSubmitting) {_afterSuccessfulSubmitting();}
+};
+const onSubmit = (evt) => {
+  evt.preventDefault();
+  addBooking(onSuccessfulSubmitting, new FormData(adForm));
+};
+const onReset = () => {
+  if (_onResetted) {_onResetted();}
 };
 
 const activate = () => {
@@ -94,7 +108,8 @@ const activate = () => {
   capacity.addEventListener('input', validateCapacity);
   roomNumber.addEventListener('input', validateRoomNumber);
 
-  adForm.addEventListener('submit', validateAdForm);
+  adForm.addEventListener('submit', onSubmit);
+  adForm.addEventListener('reset', onReset);
 
   adForm.classList.remove('ad-form--disabled');
   interactiveControls.forEach((el) => {el.removeAttribute('disabled', '');});};
@@ -111,8 +126,10 @@ const deactivate = () => {
   capacity.removeEventListener('input', validateCapacity);
   roomNumber.removeEventListener('input', validateRoomNumber);
 
+  adForm.removeEventListener('submit', onSubmit);
+
   adForm.classList.add('ad-form--disabled');
   interactiveControls.forEach((el) => {el.setAttribute('disabled', '');});
 };
 
-export {activate, deactivate, setAddress};
+export {activate, deactivate, setAddress, formSubmitted, formResetted};

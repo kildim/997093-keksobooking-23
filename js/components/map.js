@@ -1,9 +1,7 @@
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
-
-//TODO
-import {mockAd} from '../utils/data-factories.js';
+import  {getBookings} from '../services/server-data.js';
 import {renderArticle} from './card.js';
-//
+
 
 const MAIN_MARKER_ICON = 'img/main-pin.svg';
 const COMMON_MARKER_ICON = 'img/pin.svg';
@@ -39,25 +37,6 @@ const mainMarker = L.marker (
   },
 );
 
-//TODO
-const ADS_COUNT = 5;
-const advertisements = new Array(ADS_COUNT).fill(null).map(() => mockAd());
-const addMockAds = (ads) => {
-  ads.forEach((el) => {
-    const {location: {lat: lat, lng: lng}} = el;
-    const marker = L.marker({lat, lng},{draggable: false, icon: commonMarkerIcon});
-
-    marker
-      .addTo(siteMap)
-      .bindPopup(renderArticle(el),
-        {
-          keepInView: true,
-        },
-      );
-  });
-};
-//
-
 /**
  * Создаёт функцию обратного вызова для события 'moveend' главного маркера.
  * Позволяет в качестве колбэка использовать функцию, принимающую для последующей обработки
@@ -71,6 +50,19 @@ const _generateMarkerMovedCb = (coordsManipulationFunction) => function (evt) {
   const {lat, lng} = evt.target.getLatLng();
   coordsManipulationFunction(lat, lng);
 };
+const _genMarker = (ad) => {
+
+  const {location: {lat: lat, lng: lng}} = ad;
+  const marker = L.marker({lat, lng},{draggable: false, icon: commonMarkerIcon});
+
+  marker
+    .addTo(siteMap)
+    .bindPopup(renderArticle(ad),
+      {
+        keepInView: true,
+      },
+    );
+};
 
 const activate = () => {
   siteMap.setView({
@@ -80,7 +72,7 @@ const activate = () => {
   tileLayer.addTo(siteMap);
   mainMarker.addTo(siteMap);
 
-  addMockAds(advertisements);
+  getBookings((data) => data.forEach(_genMarker));
 };
 const afterLoad = (cb) => {
   siteMap.on('load', cb);
@@ -88,5 +80,8 @@ const afterLoad = (cb) => {
 const markerMoved = (cb) => {
   mainMarker.on('moveend', _generateMarkerMovedCb(cb));
 };
+const resetData = () => {
+  mainMarker.setLatLng(L.latLng(TOKIO_LAT, TOKIO_LNG));
+};
 
-export {activate, afterLoad, markerMoved};
+export {activate, afterLoad, markerMoved, resetData};
