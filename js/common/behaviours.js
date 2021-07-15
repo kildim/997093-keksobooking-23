@@ -7,7 +7,7 @@ const addModalBehaviour = (el) => {
       el.remove();
     }
   });
-  el.addEventListener('click', (evt) => {
+  el.addEventListener('click', () => {
     el.remove();
   });
 };
