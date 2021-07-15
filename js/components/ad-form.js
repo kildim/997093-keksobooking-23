@@ -1,5 +1,6 @@
 import {dropValidity} from '../utils/helpers.js';
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
+import  {addBooking} from '../services/server-data.js';
 
 const MIN_PRICE = {
   'bungalow'  : 0,
@@ -71,10 +72,10 @@ const validateRoomNumber = () => {
   _validateField(roomNumber, checkRoomNumber);
 };
 
-const validateAdForm = (evt) => {
-  if (!(capacity.validity.valid && roomNumber.validity.valid)) {
-    evt.preventDefault();}
-};
+// const validateAdForm = (evt) => {
+  // if (!(capacity.validity.valid && roomNumber.validity.valid)) {
+  //   evt.preventDefault();}
+// };
 
 const setAddress = (lat, lng) => {
   address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
@@ -94,7 +95,10 @@ const activate = () => {
   capacity.addEventListener('input', validateCapacity);
   roomNumber.addEventListener('input', validateRoomNumber);
 
-  adForm.addEventListener('submit', validateAdForm);
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    addBooking(new FormData(evt.target));
+  });
 
   adForm.classList.remove('ad-form--disabled');
   interactiveControls.forEach((el) => {el.removeAttribute('disabled', '');});};
