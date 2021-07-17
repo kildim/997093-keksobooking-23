@@ -1,5 +1,5 @@
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
-import  {getBookings} from '../services/server-data.js';
+import  {getData} from '../services/data-provider.js';
 import {renderArticle} from './card.js';
 
 
@@ -63,7 +63,9 @@ const _genMarker = (ad) => {
       },
     );
 };
-
+const renderMarkers = (data) => {
+  data.forEach(_genMarker);
+};
 const activate = () => {
   siteMap.setView({
     lat: TOKIO_LAT,
@@ -71,9 +73,8 @@ const activate = () => {
   }, 13);
   tileLayer.addTo(siteMap);
   mainMarker.addTo(siteMap);
-
-  getBookings((data) => data.forEach(_genMarker));
 };
+
 const afterLoad = (cb) => {
   siteMap.on('load', cb);
 };
@@ -84,4 +85,4 @@ const resetData = () => {
   mainMarker.setLatLng(L.latLng(TOKIO_LAT, TOKIO_LNG));
 };
 
-export {activate, afterLoad, markerMoved, resetData};
+export {activate, afterLoad, markerMoved, resetData, renderMarkers};
