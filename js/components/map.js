@@ -1,5 +1,4 @@
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
-import  {getData} from '../services/data-provider.js';
 import {renderArticle} from './card.js';
 
 
@@ -7,6 +6,7 @@ const MAIN_MARKER_ICON = 'img/main-pin.svg';
 const COMMON_MARKER_ICON = 'img/pin.svg';
 
 const siteMap = L.map('map-canvas');
+const markers = L.layerGroup();
 const tileLayer = L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
@@ -54,18 +54,17 @@ const _genMarker = (ad) => {
 
   const {location: {lat: lat, lng: lng}} = ad;
   const marker = L.marker({lat, lng},{draggable: false, icon: commonMarkerIcon});
-
   marker
-    .addTo(siteMap)
-    .bindPopup(renderArticle(ad),
-      {
-        keepInView: true,
-      },
-    );
+    .addTo(markers)
+    .bindPopup(renderArticle(ad),{keepInView: true});
 };
 const renderMarkers = (data) => {
+  markers.clearLayers();
   data.forEach(_genMarker);
+  markers.addTo(siteMap);
 };
+const hidePopups = () => markers.eachLayer((marker) => marker.closePopup());
+
 const activate = () => {
   siteMap.setView({
     lat: TOKIO_LAT,
@@ -85,4 +84,4 @@ const resetData = () => {
   mainMarker.setLatLng(L.latLng(TOKIO_LAT, TOKIO_LNG));
 };
 
-export {activate, afterLoad, markerMoved, resetData, renderMarkers};
+export {activate, afterLoad, markerMoved, resetData, renderMarkers, hidePopups};
