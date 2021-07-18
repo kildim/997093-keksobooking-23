@@ -1,5 +1,6 @@
 import * as DataProvider from '../services/data-provider.js';
 import * as locationsMap from './map.js';
+import {debounce} from '../utils/debounce.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
@@ -8,6 +9,7 @@ const PRICE_BOUNDS = {
   'low': {'min': 0, 'max': 9999},
   'high': {'min': 50000, 'max': Number.POSITIVE_INFINITY},
 };
+const RERENDER_DELAY = 500;
 const _buildFilterElementsArray = (elements) => {
   const filterElements = [];
   for (const el of elements) {if (el.type === 'select-one' || el.type === 'checkbox') {filterElements.push(el);}}
@@ -80,8 +82,8 @@ const processBookings = (data) => {
   const bookings = data.filter(_applyFilter(filter)).sort(_rankByFeatures).slice(0, 10);
   locationsMap.renderMarkers(bookings);
 };
-const getData = () => {DataProvider.getData(processBookings);};
-const onFilterChange = () => getData();
+const getData = () => {DataProvider.getData(processBookings, 3000);};
+const onFilterChange = debounce(() => getData(), RERENDER_DELAY);
 const onFocus = () => {
   locationsMap.hidePopups();
 };
