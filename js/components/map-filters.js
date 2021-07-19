@@ -2,91 +2,88 @@ import * as DataProvider from '../services/data-provider.js';
 import * as locationsMap from './map.js';
 import {debounce} from '../utils/debounce.js';
 
-const mapFilters = document.querySelector('.map__filters');
-const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
 const PRICE_BOUNDS = {
   'middle': {'min': 10000, 'max': 50000},
   'low': {'min': 0, 'max': 9999},
   'high': {'min': 50000, 'max': Number.POSITIVE_INFINITY},
 };
 const RERENDER_DELAY = 500;
-const _buildFilterElementsArray = (elements) => {
-  const filterElements = [];
-  for (const el of elements) {if (el.type === 'select-one' || el.type === 'checkbox') {filterElements.push(el);}}
-  return filterElements;
-};
-const _parsFilterElementsArrayToMap = (filterElementsArray) => {
+const SHOWN_BOOKINGS_LIMIT = 10;
+
+const mapFilters = document.querySelector('.map__filters');
+const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
+
+const _buildFilterElementsMap = (elements) => {
+  const filterElementsMap = new Map().set('characteristics', new Map()).set('features', new Set());
   const _parsElNameToKey = (name) => name.split('-')[1];
-  const filterValuesMap = new Map();
-  filterElementsArray.forEach((el) => {
+  for (const el of elements) {
     switch (el.type) {
       case 'select-one':
-        if (el.value !== 'any') {filterValuesMap.set(_parsElNameToKey(el.name), el.value);}
+        if (el.value !== 'any') {filterElementsMap.get('characteristics').set(_parsElNameToKey(el.name), el.value);}
         break;
       case 'checkbox' :
         if (el.checked) {
-          filterValuesMap.set(el.value, 'on');
+          filterElementsMap.get('features').add(el.value);
         }
     }
-  });
-  return filterValuesMap;
-};
-const _filtersValues  = () => _parsFilterElementsArrayToMap(_buildFilterElementsArray(mapFilters));
-const _rankByFeatures = (featureCountA, featureCountB) => !!(featureCountA - featureCountB);
-const _isPriceInBounds = (price, bound) => price >= PRICE_BOUNDS[bound]['min'] && price <= PRICE_BOUNDS[bound]['max'];
-const _isTypeConvenient = (type, accommodation) => type === accommodation;
-const _isRoomsNumberConvenient = (housingRooms, roomNumber) => housingRooms === Number(roomNumber);
-const _isGuestsNumberConvenient = (capacity, housingGuests) => capacity === Number(housingGuests);
-const _isFeaturePresent = (features, featureCriteria) => features === undefined ? false : features.find((el) => el === featureCriteria);
-
-const _applyFilter = (filter) => (booking) => {
-  let compliance = true;
-  for (const criteria of filter) {
-    switch (criteria[0]) {
-      case 'price':
-        compliance = compliance && _isPriceInBounds (booking.offer.price, criteria[1]);
-        break;
-      case 'type':
-        compliance = compliance && _isTypeConvenient (booking.offer.type, criteria[1]);
-        break;
-      case 'rooms':
-        compliance = compliance && _isRoomsNumberConvenient (booking.offer.rooms, criteria[1]);
-        break;
-      case 'guests':
-        compliance = compliance && _isGuestsNumberConvenient (booking.offer.guests, criteria[1]);
-        break;
-      case 'wifi':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-        break;
-      case 'washer':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-        break;
-      case 'elevator':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-        break;
-      case 'conditioner':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-        break;
-      case 'parking':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-        break;
-      case 'dishwasher':
-        compliance = compliance && _isFeaturePresent (booking.offer.features, criteria[0]);
-    }
   }
+  return filterElementsMap;
+};
 
+const _filtersValues  = () => _buildFilterElementsMap(mapFilters);
+const _rankByFeatures = (featureCountA, featureCountB) => !!(featureCountA - featureCountB);
+const _isPriceInBounds = (booking, bound) => booking.offer.price >= PRICE_BOUNDS[bound]['min'] && booking.offer.price <= PRICE_BOUNDS[bound]['max'];
+const _isTypeConvenient = (booking, accommodation) => booking.offer.type === accommodation;
+
+const _isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms === Number(roomNumber);
+const _isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
+
+const CHARACTERISTICS_CHECKERS = new Map ()
+  .set('price', _isPriceInBounds)
+  .set('type', _isTypeConvenient)
+  .set('rooms', _isRoomsNumberConvenient)
+  .set('guests', _isGuestsNumberConvenient);
+
+const _filterCharacteristics = (filters) => (booking) => {
+  let compliance = true;
+
+  const _checkCharacteristicCompliance =
+    (result) => (value, key) => compliance = result && CHARACTERISTICS_CHECKERS.get(key)(booking, value);
+
+  filters.get('characteristics').forEach(_checkCharacteristicCompliance(compliance));
   return compliance;
 };
+
+const _filterFeatures = (filters) => (booking) => {
+  let compliance = true;
+
+  const _checkFeaturesCompliance =
+    (result) => (filterFeature) => compliance = result && ((booking.offer.features === undefined) ?
+      false :
+      booking.offer.features.find((offerFeature) => offerFeature === filterFeature));
+
+  filters.get('features').forEach(_checkFeaturesCompliance(compliance));
+  return compliance;
+};
+
 const processBookings = (data) => {
-  const filter = _filtersValues();
-  const bookings = data.filter(_applyFilter(filter)).sort(_rankByFeatures).slice(0, 10);
+  const filters = _filtersValues();
+  const bookings = data
+    .filter(_filterCharacteristics(filters))
+    .filter(_filterFeatures(filters))
+    .sort(_rankByFeatures)
+    .slice(0, SHOWN_BOOKINGS_LIMIT);
   locationsMap.renderMarkers(bookings);
 };
-const getData = () => {DataProvider.getData(processBookings, 3000);};
+
+const getData = () => {DataProvider.getData(processBookings);};
+
 const onFilterChange = debounce(() => getData(), RERENDER_DELAY);
+
 const onFocus = () => {
   locationsMap.hidePopups();
 };
+
 const activate = () => {
   getData();
   mapFilters.classList.remove('map__filters--disabled');
