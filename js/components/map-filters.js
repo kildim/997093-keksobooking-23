@@ -38,39 +38,33 @@ const _isTypeConvenient = (booking, accommodation) => booking.offer.type === acc
 const _isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms === Number(roomNumber);
 const _isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
 
-const CHARACTERISTICS_CHECKERS = new Map ()
+const getCharacteristicsCheckers = () => new Map ()
   .set('price', _isPriceInBounds)
   .set('type', _isTypeConvenient)
   .set('rooms', _isRoomsNumberConvenient)
   .set('guests', _isGuestsNumberConvenient);
 
-const _filterCharacteristics = (filters) => (booking) => {
+const _applyFilter = (filters) => (booking) => {
+  const CHARACTERISTICS_CHECKERS = getCharacteristicsCheckers();
   let compliance = true;
 
   const _checkCharacteristicCompliance =
-    (result) => (value, key) => compliance = result && CHARACTERISTICS_CHECKERS.get(key)(booking, value);
-
-  filters.get('characteristics').forEach(_checkCharacteristicCompliance(compliance));
-  return compliance;
-};
-
-const _filterFeatures = (filters) => (booking) => {
-  let compliance = true;
-
+    (value, key) => compliance = compliance && CHARACTERISTICS_CHECKERS.get(key)(booking, value);
   const _checkFeaturesCompliance =
-    (result) => (filterFeature) => compliance = result && ((booking.offer.features === undefined) ?
+    (filterFeature) => compliance = compliance && ((booking.offer.features === undefined) ?
       false :
       booking.offer.features.find((offerFeature) => offerFeature === filterFeature));
 
-  filters.get('features').forEach(_checkFeaturesCompliance(compliance));
+  filters.get('characteristics').forEach(_checkCharacteristicCompliance);
+  filters.get('features').forEach(_checkFeaturesCompliance);
+
   return compliance;
 };
 
 const processBookings = (data) => {
   const filters = _filtersValues();
   const bookings = data
-    .filter(_filterCharacteristics(filters))
-    .filter(_filterFeatures(filters))
+    .filter(_applyFilter(filters))
     .sort(_rankByFeatures)
     .slice(0, SHOWN_BOOKINGS_LIMIT);
   locationsMap.renderMarkers(bookings);
