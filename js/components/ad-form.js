@@ -1,6 +1,6 @@
 import {dropValidity} from '../utils/helpers.js';
 import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
-import  {addBooking} from '../services/server-data.js';
+import  {postData} from '../services/data-provider.js';
 
 const MIN_PRICE = {
   'bungalow'  : 0,
@@ -88,7 +88,7 @@ const onSuccessfulSubmitting = () => {
 };
 const onSubmit = (evt) => {
   evt.preventDefault();
-  addBooking(onSuccessfulSubmitting, new FormData(adForm));
+  postData(onSuccessfulSubmitting, new FormData(adForm));
 };
 const onReset = () => {
   if (_onResetted) {_onResetted();}
