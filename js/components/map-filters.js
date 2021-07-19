@@ -102,6 +102,9 @@ const deactivate = () => {
   });
 };
 
-const resetData = () => mapFilters.reset();
+const resetData = () => {
+  mapFilters.reset();
+  getData();
+};
 
 export {activate, deactivate, resetData};
