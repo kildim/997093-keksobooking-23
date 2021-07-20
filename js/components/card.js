@@ -21,33 +21,36 @@ const renderArticle = (ad) => {
 
   const {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos} = ad.offer;
 
-  popupTitle.textContent = title ? title : popupTitle.remove();
-  popupTextAddress.textContent = address ? address : popupTextAddress.remove();
-  popupTextPrice.textContent = price === undefined ? popupTextPrice.remove() : `${price} ₽/ночь`;
-  popupType.textContent = HOSTS_DICTIONARY[`${type}`] ? HOSTS_DICTIONARY[`${type}`] : popupType.remove();
-  popupTextCapacity.textContent = rooms && guests ? `${rooms} ${declareNumerals(rooms, ['комната', 'комнаты', 'комнат'])} ${declareGuestsNumber(guests)}` :
-    popupTextCapacity.remove();
-  popupTextTime.textContent = checkin && checkout ? `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}` :
-    popupTextTime.remove();
-  features ?
+  const generateTextCapacityPhrase = (rooms, guests) =>
+    `${rooms} ${declareNumerals(rooms, ['комната', 'комнаты', 'комнат'])} ${declareGuestsNumber(guests)}`;
+  const renderFeatures = () => {
     popupFeaturesElements.forEach((el) => {
       if (!isOfferFeaturesIntersectingElementClasses(ad.offer.features, el)) {
         el.remove();
       }
-    }) :
-    popupFeatures.remove();
-  popupDescription.textContent = description ? description : popupDescription.remove();
-  popupAvatar.src = ad.author.avatar ? ad.author.avatar : popupAvatar.remove();
-  if (photos) {
+    });
+  };
+  const renderPhotos = () => {
     popupPhotos.textContent = '';
     for (const img of photos) {
       const newPopupPhoto = articleImgTemplate.cloneNode(false);
       newPopupPhoto.src = img;
       popupPhotos.appendChild(newPopupPhoto);
     }
-  }else{
-    popupPhotos.remove();
-  }
+  };
+
+  popupTitle.textContent = title ? title : popupTitle.remove();
+  popupTextAddress.textContent = address ? address : popupTextAddress.remove();
+  popupTextPrice.textContent = price === undefined ? popupTextPrice.remove() : `${price} ₽/ночь`;
+  popupType.textContent = HOSTS_DICTIONARY[`${type}`] ? HOSTS_DICTIONARY[`${type}`] : popupType.remove();
+  popupTextCapacity.textContent = rooms && guests ? generateTextCapacityPhrase(rooms, guests) : popupTextCapacity.remove();
+  popupTextTime.textContent = checkin && checkout ? `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}` :
+    popupTextTime.remove();
+  features ? renderFeatures() : popupFeatures.remove();
+  popupDescription.textContent = description ? description : popupDescription.remove();
+  popupAvatar.src = ad.author.avatar ? ad.author.avatar : popupAvatar.remove();
+  photos ? renderPhotos() : popupPhotos.remove();
+
   return article;
 };
 
