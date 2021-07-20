@@ -8,7 +8,6 @@ const PRICE_BOUNDS = {
   'high': {'min': 50000, 'max': Number.POSITIVE_INFINITY},
 };
 const RERENDER_DELAY = 500;
-const SHOWN_BOOKINGS_LIMIT = 10;
 
 const mapFilters = document.querySelector('.map__filters');
 const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
@@ -31,7 +30,6 @@ const _buildFilterElementsMap = (elements) => {
 };
 
 const _filtersValues  = () => _buildFilterElementsMap(mapFilters);
-const _rankByFeatures = (featureCountA, featureCountB) => !!(featureCountA - featureCountB);
 const _isPriceInBounds = (booking, bound) => booking.offer.price >= PRICE_BOUNDS[bound]['min'] && booking.offer.price <= PRICE_BOUNDS[bound]['max'];
 const _isTypeConvenient = (booking, accommodation) => booking.offer.type === accommodation;
 
@@ -78,9 +76,9 @@ const processBookings = (data) => {
 
 const getData = () => {DataProvider.getData(processBookings);};
 
-const onFilterChange = debounce(() => getData(), RERENDER_DELAY);
+const onFieldSetChange = debounce(() => getData(), RERENDER_DELAY);
 
-const onFocus = () => {
+const onFieldSetFocus = () => {
   locationsMap.hidePopups();
 };
 
@@ -90,20 +88,20 @@ const activate = () => {
   interactiveControls.forEach((el) => {
     el.removeAttribute('disabled', '');
     if (el.type !== 'fieldset') {
-      el.addEventListener('focus', onFocus);
-      el.addEventListener('change', onFilterChange);
+      el.addEventListener('focus', onFieldSetFocus);
+      el.addEventListener('change', onFieldSetChange);
     }
   });
 };
 
 const deactivate = () => {
-  mapFilters.removeEventListener('focus', onFocus);
+  mapFilters.removeEventListener('focus', onFieldSetFocus);
   mapFilters.classList.add('map__filters--disabled');
   interactiveControls.forEach((el) => {
     el.setAttribute('disabled', '');
     if (el.type !== 'fieldset') {
-      el.addEventListener('focus', onFocus);
-      el.removeEventListener('change', onFilterChange);
+      el.addEventListener('focus', onFieldSetFocus);
+      el.removeEventListener('change', onFieldSetChange);
     }
   });
 };

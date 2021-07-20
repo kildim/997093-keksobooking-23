@@ -43,7 +43,7 @@ const mainMarker = L.marker (
  *                                    параметра событие маркера библиотеки Leaflet
  * @private
  */
-const _generateMarkerMovedCb = (coordsManipulationFunction) => function (evt) {
+const onMainMarkerMooveend = (coordsManipulationFunction) => function (evt) {
   const {lat, lng} = evt.target.getLatLng();
   coordsManipulationFunction(lat, lng);
 };
@@ -72,10 +72,10 @@ const afterLoad = (cb) => {
   siteMap.on('load', cb);
 };
 const markerMoved = (cb) => {
-  mainMarker.on('moveend', _generateMarkerMovedCb(cb));
+  mainMarker.on('moveend', onMainMarkerMooveend(cb));
 };
 const resetData = () => {
-  mainMarker.setLatLng(L.latLng(TOKIO_LAT, TOKIO_LNG));
+  mainMarker.setLatLng(TOKIO_COORDS);
 };
 
 export {activate, afterLoad, markerMoved, resetData, renderMarkers, hidePopups};

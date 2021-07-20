@@ -28,12 +28,12 @@ const _validateField = (field, checkupFunction) => {
   return customValidityMessage;
 };
 
-const syncInOutTime = (evt) => {
+const onTimeInTimeOutInput = (evt) => {
   if (evt.target.name === 'timein') {timeOut.selectedIndex = timeIn.selectedIndex;}
   if (evt.target.name === 'timeout') {timeIn.selectedIndex = timeOut.selectedIndex;}
 };
 
-const setupMinPrice = () => {
+const onHostTypeInput = () => {
   const minPrice = MIN_PRICE[hostType.value];
 
   price.min = minPrice;
@@ -62,20 +62,20 @@ const checkRoomNumber = () => {
   return '';
 };
 
-const validatePrice = () => _validateField(price, checkPrice);
+const onHostTypePriceInput = () => _validateField(price, checkPrice);
 
-const validateCapacity = () => {
+const onCapacityInput = () => {
   dropValidity(roomNumber, capacity);
   _validateField(capacity, checkRoomNumber);
 };
 
-const validateRoomNumber = () => {
+const onRoomNumberInput = () => {
   dropValidity(roomNumber, capacity);
   _validateField(roomNumber, checkRoomNumber);
 };
 
-const setAddress = (coords) => {
-  address.value = `${coords.lat}, ${coords.lng}`;
+const setAddress = (lat, lng) => {
+  address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
 const formSubmitted = (cb) => _afterSuccessfulSubmitting = cb;
 const formResetted = (cb) => _onResetted = cb;
@@ -86,47 +86,47 @@ const onSuccessfulSubmitting = () => {
   resetData();
   if (_afterSuccessfulSubmitting) {_afterSuccessfulSubmitting();}
 };
-const onSubmit = (evt) => {
+const onAdFormSubmit = (evt) => {
   evt.preventDefault();
   postData(onSuccessfulSubmitting, new FormData(adForm));
 };
-const onReset = () => {
+const onAdFormReset = () => {
   if (_onResetted) {_onResetted();}
 };
 
 const activate = () => {
-  setAddress(TOKIO_COORDS);
+  setAddress(TOKIO_COORDS.lat, TOKIO_COORDS.lng);
 
-  hostType.addEventListener('input', setupMinPrice);
+  hostType.addEventListener('input', onHostTypeInput);
 
-  timeIn.addEventListener('input', syncInOutTime);
-  timeOut.addEventListener('input', syncInOutTime);
+  timeIn.addEventListener('input', onTimeInTimeOutInput);
+  timeOut.addEventListener('input', onTimeInTimeOutInput);
 
-  hostType.addEventListener('input', validatePrice);
-  price.addEventListener('input', validatePrice);
+  hostType.addEventListener('input', onHostTypePriceInput);
+  price.addEventListener('input', onHostTypePriceInput);
 
-  capacity.addEventListener('input', validateCapacity);
-  roomNumber.addEventListener('input', validateRoomNumber);
+  capacity.addEventListener('input', onCapacityInput);
+  roomNumber.addEventListener('input', onRoomNumberInput);
 
-  adForm.addEventListener('submit', onSubmit);
-  adForm.addEventListener('reset', onReset);
+  adForm.addEventListener('submit', onAdFormSubmit);
+  adForm.addEventListener('reset', onAdFormReset);
 
   adForm.classList.remove('ad-form--disabled');
   interactiveControls.forEach((el) => {el.removeAttribute('disabled', '');});};
 
 const deactivate = () => {
-  hostType.removeEventListener('input', setupMinPrice);
+  hostType.removeEventListener('input', onHostTypeInput);
 
-  timeIn.removeEventListener('input', syncInOutTime);
-  timeOut.removeEventListener('input', syncInOutTime);
+  timeIn.removeEventListener('input', onTimeInTimeOutInput);
+  timeOut.removeEventListener('input', onTimeInTimeOutInput);
 
-  hostType.removeEventListener('input', validatePrice);
-  price.removeEventListener('input', validatePrice);
+  hostType.removeEventListener('input', onHostTypePriceInput);
+  price.removeEventListener('input', onHostTypePriceInput);
 
-  capacity.removeEventListener('input', validateCapacity);
-  roomNumber.removeEventListener('input', validateRoomNumber);
+  capacity.removeEventListener('input', onCapacityInput);
+  roomNumber.removeEventListener('input', onRoomNumberInput);
 
-  adForm.removeEventListener('submit', onSubmit);
+  adForm.removeEventListener('submit', onAdFormSubmit);
 
   adForm.classList.add('ad-form--disabled');
   interactiveControls.forEach((el) => {el.setAttribute('disabled', '');});
