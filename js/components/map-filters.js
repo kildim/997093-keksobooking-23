@@ -21,13 +21,13 @@ const RERENDER_DELAY = 500;
 const mapFilters = document.querySelector('.map__filters');
 const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
 
-const _buildFilterElementsMap = (elements) => {
+const buildFilterElementsMap = (elements) => {
   const filterElementsMap = new Map().set(CHARACTERISTICS, new Map()).set(FEATURES, new Set());
-  const _parsElNameToKey = (name) => name.split('-')[WORD_POSITION_OF_NAME];
+  const parsElNameToKey = (name) => name.split('-')[WORD_POSITION_OF_NAME];
   for (const el of elements) {
     switch (el.type) {
       case NAME_OF_SELECTOR_ELEMENT:
-        if (el.value !== 'any') {filterElementsMap.get(CHARACTERISTICS).set(_parsElNameToKey(el.name), el.value);}
+        if (el.value !== 'any') {filterElementsMap.get(CHARACTERISTICS).set(parsElNameToKey(el.name), el.value);}
         break;
       case NAME_OF_CHECKBOX_ELEMENT :
         if (el.checked) {
@@ -38,32 +38,32 @@ const _buildFilterElementsMap = (elements) => {
   return filterElementsMap;
 };
 
-const _filtersValues  = () => _buildFilterElementsMap(mapFilters);
-const _isPriceInBounds = (booking, bound) => booking.offer.price >= PRICE_BOUNDS[bound]['min'] && booking.offer.price <= PRICE_BOUNDS[bound]['max'];
-const _isTypeConvenient = (booking, accommodation) => booking.offer.type === accommodation;
+const filtersValues  = () => buildFilterElementsMap(mapFilters);
+const isPriceInBounds = (booking, bound) => booking.offer.price >= PRICE_BOUNDS[bound]['min'] && booking.offer.price <= PRICE_BOUNDS[bound]['max'];
+const isTypeConvenient = (booking, accommodation) => booking.offer.type === accommodation;
 
-const _isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms === Number(roomNumber);
-const _isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
+const isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms === Number(roomNumber);
+const isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
 
 const getCharacteristicsCheckers = () => new Map ()
-  .set(PRICE_SELECTOR, _isPriceInBounds)
-  .set(TYPE_SELECTOR, _isTypeConvenient)
-  .set(ROOMS_SELECTOR, _isRoomsNumberConvenient)
-  .set(GUEST_SELECTOR, _isGuestsNumberConvenient);
+  .set(PRICE_SELECTOR, isPriceInBounds)
+  .set(TYPE_SELECTOR, isTypeConvenient)
+  .set(ROOMS_SELECTOR, isRoomsNumberConvenient)
+  .set(GUEST_SELECTOR, isGuestsNumberConvenient);
 
-const _applyFilter = (filters, booking) => {
+const applyFilter = (filters, booking) => {
   const CHARACTERISTICS_CHECKERS = getCharacteristicsCheckers();
   let compliance = true;
 
-  const _checkCharacteristicCompliance =
+  const checkCharacteristicCompliance =
     (value, key) => compliance = compliance && CHARACTERISTICS_CHECKERS.get(key)(booking, value);
-  const _checkFeaturesCompliance =
+  const checkFeaturesCompliance =
     (filterFeature) => compliance = compliance && ((booking.offer.features === undefined) ?
       false :
       booking.offer.features.find((offerFeature) => offerFeature === filterFeature));
 
-  filters.get(CHARACTERISTICS).forEach(_checkCharacteristicCompliance);
-  filters.get(FEATURES).forEach(_checkFeaturesCompliance);
+  filters.get(CHARACTERISTICS).forEach(checkCharacteristicCompliance);
+  filters.get(FEATURES).forEach(checkFeaturesCompliance);
 
   return compliance;
 };
@@ -74,7 +74,7 @@ const processBookings = (data) => {
   const representation = [];
 
   while (iterationsCounter < data.length && representation.length < MAX_REPRESENTATION_COUNT) {
-    if (_applyFilter(_filtersValues(), data[iterationsCounter])) {
+    if (applyFilter(filtersValues(), data[iterationsCounter])) {
       representation.push(data[iterationsCounter]);
     }
     iterationsCounter++;

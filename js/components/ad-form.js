@@ -21,10 +21,10 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const address = adForm.querySelector('#address');
 const interactiveControls = adForm.querySelectorAll('input, select, fieldset');
-let _afterSuccessfulSubmitting;
-let _onResetted;
+let afterSuccessfulSubmitting;
+let onResetted;
 
-const _validateField = (field, checkupFunction) => {
+const validateField = (field, checkupFunction) => {
   const customValidityMessage = checkupFunction();
   field.setCustomValidity(customValidityMessage);
   return customValidityMessage;
@@ -64,36 +64,36 @@ const checkRoomNumber = () => {
   return '';
 };
 
-const onHostTypePriceInput = () => _validateField(price, checkPrice);
+const onHostTypePriceInput = () => validateField(price, checkPrice);
 
 const onCapacityInput = () => {
   dropValidity(roomNumber, capacity);
-  _validateField(capacity, checkRoomNumber);
+  validateField(capacity, checkRoomNumber);
 };
 
 const onRoomNumberInput = () => {
   dropValidity(roomNumber, capacity);
-  _validateField(roomNumber, checkRoomNumber);
+  validateField(roomNumber, checkRoomNumber);
 };
 
 const setAddress = (lat, lng) => {
   address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
-const formSubmitted = (cb) => _afterSuccessfulSubmitting = cb;
-const formResetted = (cb) => _onResetted = cb;
+const formSubmitted = (cb) => afterSuccessfulSubmitting = cb;
+const formResetted = (cb) => onResetted = cb;
 
 const resetData = () => adForm.reset();
 
 const onSuccessfulSubmitting = () => {
   resetData();
-  if (_afterSuccessfulSubmitting) {_afterSuccessfulSubmitting();}
+  if (afterSuccessfulSubmitting) {afterSuccessfulSubmitting();}
 };
 const onAdFormSubmit = (evt) => {
   evt.preventDefault();
   postData(onSuccessfulSubmitting, new FormData(adForm));
 };
 const onAdFormReset = () => {
-  if (_onResetted) {_onResetted();}
+  if (onResetted) {onResetted();}
 };
 
 const activate = () => {
