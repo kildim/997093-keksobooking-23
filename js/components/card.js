@@ -21,7 +21,7 @@ const renderArticle = (ad) => {
 
   const {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos} = ad.offer;
 
-  const generateTextCapacityPhrase = (rooms, guests) =>
+  const generateTextCapacityPhrase = () =>
     `${rooms} ${declareNumerals(rooms, ['комната', 'комнаты', 'комнат'])} ${declareGuestsNumber(guests)}`;
   const renderFeatures = () => {
     popupFeaturesElements.forEach((el) => {
@@ -43,7 +43,7 @@ const renderArticle = (ad) => {
   popupTextAddress.textContent = address ? address : popupTextAddress.remove();
   popupTextPrice.textContent = price === undefined ? popupTextPrice.remove() : `${price} ₽/ночь`;
   popupType.textContent = HOSTS_DICTIONARY[`${type}`] ? HOSTS_DICTIONARY[`${type}`] : popupType.remove();
-  popupTextCapacity.textContent = rooms && guests ? generateTextCapacityPhrase(rooms, guests) : popupTextCapacity.remove();
+  popupTextCapacity.textContent = rooms && guests ? generateTextCapacityPhrase() : popupTextCapacity.remove();
   popupTextTime.textContent = checkin && checkout ? `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}` :
     popupTextTime.remove();
   features ? renderFeatures() : popupFeatures.remove();

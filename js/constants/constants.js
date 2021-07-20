@@ -7,6 +7,6 @@ const HOSTS_DICTIONARY = {
   'palace': 'Дворец',
   'hotel': 'Отель',
 };
-const TOKIO_COORDS = {lat: 35.685, lng: 139.7514}
+const TOKIO_COORDS = {lat: 35.685, lng: 139.7514};
 
 export {FEATURE_VALUES, RESIDENCE_TYPES, HOSTS_DICTIONARY, TOKIO_COORDS};
