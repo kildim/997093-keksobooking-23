@@ -1,8 +1,9 @@
 import {HOSTS_DICTIONARY} from '../constants/constants.js';
 import {isOfferFeaturesIntersectingElementClasses, declareNumerals, declareGuestsNumber} from '../utils/helpers.js';
 
-const articleTemplate = document.querySelector('#card').content.querySelector('.popup');
-const articleImgTemplate = document.querySelector('#card').content.querySelector('.popup__photo');
+const cardHTMLElement = document.querySelector('#card');
+const articleTemplate = cardHTMLElement.content.querySelector('.popup');
+const articleImgTemplate = cardHTMLElement.content.querySelector('.popup__photo');
 
 const renderArticle = (ad) => {
   const article = articleTemplate.cloneNode(true);
