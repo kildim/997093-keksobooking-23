@@ -2,6 +2,8 @@ import {dropValidity} from '../utils/helpers.js';
 import {TOKIO_COORDS} from '../constants/constants.js';
 import  {postData} from '../services/data-provider.js';
 
+const MIN_GUESTS_NUMBER = 0;
+const MAX_ROOMS_NUMBER = 100;
 const MIN_PRICE = {
   'bungalow'  : 0,
   'flat'      : 1000,
@@ -52,9 +54,9 @@ const checkRoomNumber = () => {
   const roomsCount = parseInt(roomNumber.value, 10);
   const guestsCount = parseInt(capacity.value, 10);
 
-  if (roomsCount > 99 && guestsCount !== 0) {
+  if (roomsCount >= MAX_ROOMS_NUMBER && guestsCount !== MIN_GUESTS_NUMBER) {
     return 'Для более чем 100 комнат выберите вариант "не для гостей"';
-  }else if (guestsCount === 0 && roomsCount < 100) {
+  }else if (guestsCount === MIN_GUESTS_NUMBER && roomsCount < MAX_ROOMS_NUMBER) {
     return 'Для "не для гостей" выберите вариант более чем 100 комнат';
   }else if (roomsCount < guestsCount) {
     return 'Количество комнат не должно быть меньше количества гостей';

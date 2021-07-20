@@ -1,3 +1,13 @@
+const CONJUGATION_CASES = [2, 0, 1, 1, 1, 2];
+const HUNDRED = 100;
+const DECIMALS =10;
+const FORTH = 4;
+const TWENTY = 20;
+const TWO =2;
+const FIVE = 5;
+const ONE = 1;
+const GUEST_LIMIT = 99;
+
 const convertToSelector = (features) => features.map((feature) => `popup__feature--${feature}`);
 
 const isOfferFeaturesIntersectingElementClasses = (classesArray, element) =>
@@ -6,15 +16,14 @@ const isOfferFeaturesIntersectingElementClasses = (classesArray, element) =>
   );
 
 // https://gist.github.com/realmyst/1262561
-const declareNumerals = (number, titles) => {
-  const cases = [2, 0, 1, 1, 1, 2];
-  return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5] ];
-};
+const declareNumerals = (number, titles) => titles[(number % HUNDRED > FORTH && number % HUNDRED < TWENTY) ?
+  TWO
+  : CONJUGATION_CASES[(number % DECIMALS < FIVE) ? number % DECIMALS : FIVE] ];
 
 const  declareGuestsNumber = (guests) => {
   let guestsNumberString;
-  guestsNumberString = guests % 10 === 1 ? `для ${guests} гостя` : `для ${guests} гостей`;
-  guestsNumberString = guests > 99 ? 'не для гостей' : guestsNumberString;
+  guestsNumberString = guests % DECIMALS === ONE ? `для ${guests} гостя` : `для ${guests} гостей`;
+  guestsNumberString = guests > GUEST_LIMIT ? 'не для гостей' : guestsNumberString;
   return guestsNumberString;
 };
 

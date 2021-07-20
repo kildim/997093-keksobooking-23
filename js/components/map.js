@@ -4,6 +4,15 @@ import {renderArticle} from './card.js';
 
 const MAIN_MARKER_ICON = 'img/main-pin.svg';
 const COMMON_MARKER_ICON = 'img/pin.svg';
+const MAP_SCALE = 13;
+const MAIN_ICON_WIDTH = 52;
+const MAIN_ICON_HEIGHT = 52;
+const MAIN_ICON_ANCHOR_GORIZONTAL_POSITION = 26;
+const MAIN_ICON_ANCHOR_VERTICAL_POSITION = 52;
+const MARKER_ICON_WIDTH = 40;
+const MARKER_ICON_HEIGHT = 40;
+const MARKER_ANCHOR_GORIZONTAL_POSITION = 20;
+const MARKER_ANCHOR_VERTICAL_POSITION = 40;
 
 const siteMap = L.map('map-canvas');
 const markers = L.layerGroup();
@@ -15,15 +24,15 @@ const tileLayer = L.tileLayer(
 const mainMarkerIcon = L.icon (
   {
     iconUrl: MAIN_MARKER_ICON,
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
+    iconSize: [MAIN_ICON_WIDTH, MAIN_ICON_HEIGHT],
+    iconAnchor: [MAIN_ICON_ANCHOR_GORIZONTAL_POSITION, MAIN_ICON_ANCHOR_VERTICAL_POSITION],
   },
 );
 const commonMarkerIcon = L.icon (
   {
     iconUrl: COMMON_MARKER_ICON,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT],
+    iconAnchor: [MARKER_ANCHOR_GORIZONTAL_POSITION, MARKER_ANCHOR_VERTICAL_POSITION],
   },
 );
 const mainMarker = L.marker (
@@ -63,7 +72,7 @@ const renderMarkers = (data) => {
 const hidePopups = () => markers.eachLayer((marker) => marker.closePopup());
 
 const activate = () => {
-  siteMap.setView(TOKIO_COORDS, 13);
+  siteMap.setView(TOKIO_COORDS, MAP_SCALE);
   tileLayer.addTo(siteMap);
   mainMarker.addTo(siteMap);
 };

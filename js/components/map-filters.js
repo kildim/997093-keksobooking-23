@@ -2,6 +2,15 @@ import * as DataProvider from '../services/data-provider.js';
 import * as locationsMap from './map.js';
 import {debounce} from '../utils/debounce.js';
 
+const WORD_POSITION_OF_NAME = 1;
+const NAME_OF_SELECTOR_ELEMENT = 'select-one';
+const NAME_OF_CHECKBOX_ELEMENT = 'checkbox';
+const PRICE_SELECTOR = 'price';
+const TYPE_SELECTOR = 'type';
+const ROOMS_SELECTOR = 'rooms';
+const GUEST_SELECTOR = 'guests';
+const CHARACTERISTICS = 'characteristics';
+const FEATURES = 'features';
 const PRICE_BOUNDS = {
   'middle': {'min': 10000, 'max': 50000},
   'low': {'min': 0, 'max': 9999},
@@ -13,16 +22,16 @@ const mapFilters = document.querySelector('.map__filters');
 const interactiveControls = mapFilters.querySelectorAll('input, select, fieldset');
 
 const _buildFilterElementsMap = (elements) => {
-  const filterElementsMap = new Map().set('characteristics', new Map()).set('features', new Set());
-  const _parsElNameToKey = (name) => name.split('-')[1];
+  const filterElementsMap = new Map().set(CHARACTERISTICS, new Map()).set(FEATURES, new Set());
+  const _parsElNameToKey = (name) => name.split('-')[WORD_POSITION_OF_NAME];
   for (const el of elements) {
     switch (el.type) {
-      case 'select-one':
-        if (el.value !== 'any') {filterElementsMap.get('characteristics').set(_parsElNameToKey(el.name), el.value);}
+      case NAME_OF_SELECTOR_ELEMENT:
+        if (el.value !== 'any') {filterElementsMap.get(CHARACTERISTICS).set(_parsElNameToKey(el.name), el.value);}
         break;
-      case 'checkbox' :
+      case NAME_OF_CHECKBOX_ELEMENT :
         if (el.checked) {
-          filterElementsMap.get('features').add(el.value);
+          filterElementsMap.get(FEATURES).add(el.value);
         }
     }
   }
@@ -37,10 +46,10 @@ const _isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms ==
 const _isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
 
 const getCharacteristicsCheckers = () => new Map ()
-  .set('price', _isPriceInBounds)
-  .set('type', _isTypeConvenient)
-  .set('rooms', _isRoomsNumberConvenient)
-  .set('guests', _isGuestsNumberConvenient);
+  .set(PRICE_SELECTOR, _isPriceInBounds)
+  .set(TYPE_SELECTOR, _isTypeConvenient)
+  .set(ROOMS_SELECTOR, _isRoomsNumberConvenient)
+  .set(GUEST_SELECTOR, _isGuestsNumberConvenient);
 
 const _applyFilter = (filters, booking) => {
   const CHARACTERISTICS_CHECKERS = getCharacteristicsCheckers();
@@ -53,8 +62,8 @@ const _applyFilter = (filters, booking) => {
       false :
       booking.offer.features.find((offerFeature) => offerFeature === filterFeature));
 
-  filters.get('characteristics').forEach(_checkCharacteristicCompliance);
-  filters.get('features').forEach(_checkFeaturesCompliance);
+  filters.get(CHARACTERISTICS).forEach(_checkCharacteristicCompliance);
+  filters.get(FEATURES).forEach(_checkFeaturesCompliance);
 
   return compliance;
 };

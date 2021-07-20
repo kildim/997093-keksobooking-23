@@ -3,6 +3,7 @@ import * as SuccessMessage from '../components/success-message.js';
 
 const DATA_GET_URL = 'https://23.javascript.pages.academy/keksobooking/data';
 const DATA_POST_URL = 'https://23.javascript.pages.academy/keksobooking';
+const POST_METHOD_NAME = 'POST';
 
 const getData = (processData) => {
   fetch(DATA_GET_URL)
@@ -14,7 +15,7 @@ const getData = (processData) => {
 
 const postData = (processSuccessResponse, formData) => {
   const FETCH_OPTIONS = {
-    method: 'POST',
+    method: POST_METHOD_NAME,
     body: formData,
   };
 
