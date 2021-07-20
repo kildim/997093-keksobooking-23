@@ -1,4 +1,4 @@
-import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
+import {TOKIO_COORDS} from '../constants/constants.js';
 import {renderArticle} from './card.js';
 
 
@@ -27,10 +27,7 @@ const commonMarkerIcon = L.icon (
   },
 );
 const mainMarker = L.marker (
-  {
-    lat: TOKIO_LAT,
-    lng: TOKIO_LNG,
-  },
+  TOKIO_COORDS,
   {
     draggable: true,
     icon: mainMarkerIcon,
@@ -66,10 +63,7 @@ const renderMarkers = (data) => {
 const hidePopups = () => markers.eachLayer((marker) => marker.closePopup());
 
 const activate = () => {
-  siteMap.setView({
-    lat: TOKIO_LAT,
-    lng: TOKIO_LNG,
-  }, 13);
+  siteMap.setView(TOKIO_COORDS, 13);
   tileLayer.addTo(siteMap);
   mainMarker.addTo(siteMap);
 };

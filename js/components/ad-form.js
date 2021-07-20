@@ -1,5 +1,5 @@
 import {dropValidity} from '../utils/helpers.js';
-import {TOKIO_LAT, TOKIO_LNG} from '../constants/constants.js';
+import {TOKIO_COORDS} from '../constants/constants.js';
 import  {postData} from '../services/data-provider.js';
 
 const MIN_PRICE = {
@@ -74,8 +74,8 @@ const validateRoomNumber = () => {
   _validateField(roomNumber, checkRoomNumber);
 };
 
-const setAddress = (lat, lng) => {
-  address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+const setAddress = (coords) => {
+  address.value = `${coords.lat}, ${coords.lng}`;
 };
 const formSubmitted = (cb) => _afterSuccessfulSubmitting = cb;
 const formResetted = (cb) => _onResetted = cb;
@@ -95,7 +95,7 @@ const onReset = () => {
 };
 
 const activate = () => {
-  setAddress(TOKIO_LAT, TOKIO_LNG);
+  setAddress(TOKIO_COORDS);
 
   hostType.addEventListener('input', setupMinPrice);
 
