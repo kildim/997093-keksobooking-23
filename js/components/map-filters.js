@@ -44,7 +44,7 @@ const getCharacteristicsCheckers = () => new Map ()
   .set('rooms', _isRoomsNumberConvenient)
   .set('guests', _isGuestsNumberConvenient);
 
-const _applyFilter = (filters) => (booking) => {
+const _applyFilter = (filters, booking) => {
   const CHARACTERISTICS_CHECKERS = getCharacteristicsCheckers();
   let compliance = true;
 
@@ -62,12 +62,18 @@ const _applyFilter = (filters) => (booking) => {
 };
 
 const processBookings = (data) => {
-  const filters = _filtersValues();
-  const bookings = data
-    .filter(_applyFilter(filters))
-    .sort(_rankByFeatures)
-    .slice(0, SHOWN_BOOKINGS_LIMIT);
-  locationsMap.renderMarkers(bookings);
+  const MAX_REPRESENTATION_COUNT = 10;
+  let iterationsCounter = 0;
+  const representation = [];
+
+  while (iterationsCounter < data.length && representation.length < MAX_REPRESENTATION_COUNT) {
+    if (_applyFilter(_filtersValues(), data[iterationsCounter])) {
+      representation.push(data[iterationsCounter]);
+    }
+    iterationsCounter++;
+  }
+
+  locationsMap.renderMarkers(representation);
 };
 
 const getData = () => {DataProvider.getData(processBookings);};
