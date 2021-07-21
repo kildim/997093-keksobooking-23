@@ -1,6 +1,8 @@
 import {dropValidity} from '../utils/helpers.js';
 import {TOKIO_COORDS} from '../constants/constants.js';
 import  {postData} from '../services/data-provider.js';
+import * as Avatar from './avatar.js';
+import * as Preview from './preview.js';
 
 const MIN_GUESTS_NUMBER = 0;
 const MAX_ROOMS_NUMBER = 100;
@@ -99,6 +101,8 @@ const onAdFormReset = () => {
 const activate = () => {
   setAddress(TOKIO_COORDS.lat, TOKIO_COORDS.lng);
 
+  Avatar.activate();
+  Preview.activate();
   hostType.addEventListener('input', onHostTypeInput);
 
   timeIn.addEventListener('input', onTimeInTimeOutInput);
@@ -117,6 +121,8 @@ const activate = () => {
   interactiveControls.forEach((el) => {el.removeAttribute('disabled', '');});};
 
 const deactivate = () => {
+  Avatar.deactivate();
+  Preview.deactivate();
   hostType.removeEventListener('input', onHostTypeInput);
 
   timeIn.removeEventListener('input', onTimeInTimeOutInput);
