@@ -95,6 +95,8 @@ const onAdFormSubmit = (evt) => {
   postData(onSuccessfulSubmitting, new FormData(adForm));
 };
 const onAdFormReset = () => {
+  Avatar.setDefault();
+  Preview.setDefault();
   if (onResetted) {onResetted();}
 };
 

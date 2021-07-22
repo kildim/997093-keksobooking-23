@@ -1,4 +1,5 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const DEFAULT_IMG_SRC = 'img/muffin-grey.svg';
 
 const fileChooser = document.querySelector('#avatar');
 const preview = document.querySelector('.ad-form-header__preview img');
@@ -28,4 +29,6 @@ const deactivate = () => {
   fileChooser.removeEventListener('change', onFileChooserChange);
 };
 
-export {activate, deactivate};
+const setDefault = () => {preview.src = DEFAULT_IMG_SRC;};
+
+export {activate, deactivate, setDefault};

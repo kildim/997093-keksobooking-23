@@ -29,4 +29,9 @@ const deactivate = () => {
   fileChooser.removeEventListener('change', onFileChooserChange);
 };
 
-export {activate, deactivate};
+const setDefault = () => {
+  preview.style.backgroundSize = '';
+  preview.style.backgroundImage = '';
+};
+
+export {activate, deactivate, setDefault};

@@ -43,7 +43,7 @@ const isPriceInBounds = (booking, bound) => booking.offer.price >= PRICE_BOUNDS[
 const isTypeConvenient = (booking, accommodation) => booking.offer.type === accommodation;
 
 const isRoomsNumberConvenient = (booking, roomNumber) => booking.offer.rooms === Number(roomNumber);
-const isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.capacity === Number(housingGuests);
+const isGuestsNumberConvenient = (booking, housingGuests) => booking.offer.guests === Number(housingGuests);
 
 const getCharacteristicsCheckers = () => new Map ()
   .set(PRICE_SELECTOR, isPriceInBounds)
