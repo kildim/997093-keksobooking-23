@@ -25,6 +25,8 @@ const COMMON_MARKER_ICON_OPTIONS =
     iconSize: [MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT],
     iconAnchor: [MARKER_ANCHOR_HORIZONTAL_POSITION, MARKER_ANCHOR_VERTICAL_POSITION],
   };
+const createIcon = (options) => L.icon(options);
+const createMarker = (location, options) => L.marker(location, options);
 
 const siteMap = L.map('map-canvas');
 const markers = L.layerGroup();
@@ -33,10 +35,10 @@ const tileLayer = L.tileLayer(
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   });
-const mainMarkerIcon = L.icon (MAIN_MARKER_ICON_OPTIONS);
-const commonMarkerIcon = L.icon (COMMON_MARKER_ICON_OPTIONS);
+const mainMarkerIcon = createIcon (MAIN_MARKER_ICON_OPTIONS);
+const commonMarkerIcon = createIcon (COMMON_MARKER_ICON_OPTIONS);
 
-const mainMarker = L.marker (TOKIO_COORDS, {draggable: true, icon: mainMarkerIcon});
+const mainMarker = createMarker (TOKIO_COORDS, {draggable: true, icon: mainMarkerIcon});
 
 /**
  * Создаёт функцию обратного вызова для события 'moveend' главного маркера.
@@ -54,7 +56,7 @@ const onMainMarkerMooveend = (coordsManipulationFunction) => function (evt) {
 const genMarker = (ad) => {
 
   const {location: {lat: lat, lng: lng}} = ad;
-  const marker = L.marker({lat, lng},{draggable: false, icon: commonMarkerIcon});
+  const marker = createMarker({lat, lng},{draggable: false, icon: commonMarkerIcon});
   marker
     .addTo(markers)
     .bindPopup(renderArticle(ad),{keepInView: true});
